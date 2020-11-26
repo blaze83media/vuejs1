@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+
+    <script type="text/javascript" src="js/vue.js"></script>
+
+          <style>
+         .active1 {
+            background: red;
+         }
+
+         .info {
+            color: #00529B;
+            background-color: #BDE5F8;
+         }
+         div {
+            margin: 10px 0;
+            padding: 12px;
+         }
+         .active {
+            color: #4F8A10;
+            background-color: #DFF2BF;
+         }
+         .displayError{
+            color: #D8000C;
+            background-color: #FFBABA;
+         }
+         
+      </style>
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+ <div style="text-align:center;">
+
+    	<p>  //////objects, direct instance creation //////////</p>
+        <h1 id='id_x'> {{message}} </h1>
+        
+        <div id='id_y'>
+            <h4 id='id_a'> What is your firstname?: {{fname}} </h4>
+            <h4 id='id_b'> What is your firstname?: {{lname}} </h4>
+            <h4 id='id_c'> What is your address?: {{address}} </h4>
+
+            <h5 id='id_d'> {{blz_details()}} </h5>
+            <div v-html='htmlcontent'></div>
+            <img v-bind:src='imgsrc' width='300' height="250" />
+        </div>
+
+
+    </div>
+
+    <div>
+        <p id='directI'> {{firstname}} , {{lastname}}</p>
+    </div>
+
+    <p>////////// component - always use a function in Vue.extend()  //////</p>
+    <div id="idf"> {{firstname}} </div>
+
+    <div id="comp1"> </div>
+    <div id="msg"> </div>
+
+    <hr></hr>
+
+    <P> //############# reusable components ###################################</P>
+
+    <div id='gt1'>
+        <blz_component></blz_component>
+    </div>
+
+    <div id='gt2'>
+        <blz_component></blz_component>
+        
+    </div>
+    
+    <p> // ######################### Data Binding ################################# </p>
+     <div id = "databinding">
+         <component v-bind:is = "view"></component>
+      </div>
+
+      <div id='bmx'>
+      	<p>{{message}}</p>
+      	<button v-on:click="revf"> Reveresd </button>
+      </div>
+
+      <p> ############## Computed Method ######################## </p>
+
+    	<div id="cmpt">
+    		Enter hisname: <input type="text" v-model="hisname" /> <br/> <br/>
+    		Enter hername: <input type="text" v-model="hername" /> <br/> <br/>
+
+    		<h2>His name is {{hisname}} and her name is {{hername}} </h2>
+    		<h2>Use computed method to call her name:  {{gettheirnames}} </h2>
+
+    	</div>  
+
+
+
+		<p>//## Method (gives real random number always) & Computed (gives thesame number all the time ) ##</p>
+
+ 		<div id = "cmpt_mthd">
+         <p style = "background-color:gray;">Random No from computed property: {{getrandomno}}</p>
+         <p>Random No from method: {{getrandomno1()}}</p>
+         <p>Random No from method : {{getrandomno1()}}</p>
+         <p  style = "background-color:gray;">Random No from computed property: {{getrandomno}}</p>
+         <p  style = "background-color:gray;">Random No from computed property: {{getrandomno}}</p>
+         <p  style = "background-color:gray;">Random No from computed
+            property: {{getrandomno}}</p>
+         <p>Random No from method: {{getrandomno1()}}</p>
+         <p>Random No from method: {{getrandomno1()}}</p>
+      	</div>
+
+	    <br/>
+
+	    <p>//#### Get /  Set  (get prevents update while SET allows update)### Watch takes care of updating #####</p>
+	    <div id = "get_set">
+	         <input type = "text" v-model = "fullnameX" />
+	         <p>{{cousin}}</p>
+	         <p>{{nephew}}</p>
+	          Kilometers : <input type = "text" v-model = "kilometers">
+              Meters : <input type = "text" v-model = "meters">
+	      </div>
+
+	      <p>// Watch takes care of updating the textboxes with the calculation done in the respective functions.</p>
+
+	       <div id = "lop">
+	         Kilometers : <input type = "text" v-model = "kilometers">
+	         Meters : <input type = "text" v-model = "meters">
+	      </div>
+      		
+      	  <br/>
+
+
+      	  <p>//### Binding (adding href link using 'v-bind:href' or ':href') & v-vind:class (check css)#########</p>
+      	  <h3>CSS styling</h3>
+
+      	   <div id = "dbg">
+	            {{title}} <br/>
+	         	<a v-bind:href = "href_google" target = "_blank">Click me to GOOGLE </a> <br/>
+	         	<a :href = "href_yahoo" target = "_blank">Click me to YAHOO </a> <br/>
+
+	         	<div v-bind:class = "{active1:isactive}"><b>{{title2}}</b></div> <br/>
+
+	         	<div class = "info"  v-bind:class = "{ active: isActive, 'displayError': hasError }">
+            		{{title3}}
+         		</div>
+
+
+         		<div v-bind:class = "[infoclass, errorclass]">{{title4}}</div>
+
+         		<div v-bind:class = "[isActive ? infoclass : '', haserror ? errorclass : '']">{{title5}}</div>
+
+         		<new_component v-bind:class = "{active:isActive}"></new_component>
+
+
+         		<div v-bind:style = "{ color: activeColor, fontSize: fontSize + 'px' }">{{title6}}</div>
+      		</div>
+     
+
+	    <p> /// #############  DIV inline style css #######################</p>
+	       <div id = "divcss">
+	         <div v-bind:style = "styleobj">{{title}}</div>
+	      </div>
+
+	     <p> ############## TEXTBOX simple form  ##################</p>
+	   <div id = "databindingx" v-bind:style = "css1">
+         <h3>TEXTBOX simple form</h3>
+         <input  v-model = "name" placeholder = "Enter Name" />
+         <h3>Name entered is : {{name}}</h3>
+         <hr/>
+         <h3>Textarea</h3>
+         <textarea v-model = "textmessage" placeholder = "Add Details"></textarea>
+         <h1><p>{{textmessage}}</p></h1>
+         <hr/>
+         <h3>Checkbox</h3>
+         <input type = "checkbox" id = "checkbox" v-model = "checked"> {{checked}}
+      </div>
+
+
+      <p> //########### select options #################### </p>
+
+      <div id = "slt" v-bind:style = "css1">
+         <h3>Radio</h3>
+         <input type = "radio" id = "black" value = "Black" v-model = "picked">Black
+         <input type = "radio" id = "white" value = "White" v-model = "picked">White
+         <h3>Radio element clicked : {{picked}} </h3>
+         <hr/>
+         <h3>Select</h3>
+         <select v-model = "languages">
+            <option disabled value = "">Please select one</option>
+            <option>Java</option>
+            <option>Javascript</option>
+            <option>Php</option>
+            <option>C</option>
+            <option>C++</option>
+         </select>
+         <h3>Languages Selected is : {{ languages }}</h3>
+         <hr/>
+      </div>
+
+
+      <p> // ###### modifiers accept only numbers ############</p>
+
+       <div id = "mdf1">
+         <span style = "font-size:25px;">Enter Age:</span> <input v-model.number = "age" type = "number">
+         <br/>
+         <span style = "font-size:25px;">Enter Message:</span> <input v-model.lazy = "msg">
+         <h3>Display Message : {{msg}}</h3>
+         <br/>
+         <span style = "font-size:25px;">Enter Message : </span><input v-model.trim = "message">
+         <h3>Display Message : {{message}}</h3>
+      </div>
+      
+    
+
+
+
+</div>
+
+
+    <script type=" text/javascript " async defer>
+
+    	//////objects, direct instance creation //////////
+        var vue_det = new Vue({
+            el: '#id_x',
+            data: {message: 'Who are they?'}
+        });
+
+        var vm = new Vue({
+            el: '#id_y',
+            data: {
+                fname: 'Aghogho',
+                lname: 'Obukohwo',
+                address: '11 Acute Way',
+                htmlcontent: '<div><h2> My father get  house </h2></div>',
+                imgsrc: 'images/bn1.jpeg'
+            },
+
+            methods: {
+                blz_details: function() {
+                    return 'My name is ' + this.fname + ' ' + this.lname;
+                }
+            }
+        });
+
+        //////objects, direct instance creation //////////
+        var _obj = {
+            firstname: 'Maro',
+            lastname: 'Obuks'
+        };
+        var vm = new Vue({
+            el: '#directI',
+            data: _obj
+        });
+        console.log(vm.firstname);
+        console.log(vm.lastname);
+        console.log(vm.$data);
+
+        ////////// component - always use a function in Vue.extend()  //////
+        var Comp = Vue.extend({
+            data: function() {
+                return _obj
+            }
+        });
+
+        var showcomp = new Comp();
+        new Vue({
+            el: '#idf',
+            data: showcomp
+        });
+        console.log(showcomp.firstname);
+
+        
+                //////  Props array  // props takes an array or object ///////////////////
+                var fam1 = Vue.component('Myfamily', {
+                    props: ['Mercy', 'Ruona', 'Daddy']
+                });
+
+
+                /////// Props Onject ////////////////////////////////////
+
+                var fam2 = Vue.component('Myfamdetails', {
+                    Weight: Number,
+                    Height: Number,
+                    age: {
+                        type: Number,
+                        default: 0,
+                        required: true,
+                        validator: function(value) {
+                            return value >= 0
+                        }
+                    }
+                });
+
+       
+
+        ///// Vue testing  //////////////
+
+        var Comp = Vue.extend({
+            props: ['msg'],
+            template: '<div>{{ msg }}</div>'
+        })
+        var vm = new Comp({
+                propsData: {
+                    msg: 'hello'
+                }
+            })
+            ///////////////////////////////////////
+
+
+
+        var vm = new Vue({
+            data: {
+                a: 5
+            },
+            methods: {
+                asquare: function() {
+                    this.a *= this.a;
+                }
+            }
+        })
+        vm.asquare();
+        console.log(vm.a); // 25
+
+
+
+        //############# reusable components ###################################
+ 
+       Vue.component("blz_component", {
+
+                    template : '<div v-on:mouseover = "changename()" v-on:mouseout = "originalname();"><h1>This is a Vue COMPONENT made by <span id = "namez">{{namez}}</span></h1></div>',
+
+                    data: function() {return { namez: 'Iroro'}                  
+                    },
+
+                    methods: {
+                        changename: function() {
+                            this.namez = 'Kess';
+                        },
+
+                        originalname: function(){
+                            this.namez = 'Bibi';
+                        }
+                    }
+
+        });
+
+                    var vm11 = new Vue({
+                        el: '#gt1'
+                    });
+
+                    var vm22 = new Vue({
+                        el: '#gt2'
+                    });
+
+   // ######################### Data Binding #################################
+
+
+
+  var vmx = new Vue({
+            el: '#databinding',
+            data: {
+               view: 'component1'
+            },
+            components: {
+               'component1': {
+                  template: '<div><span style = "font-size:25;color:red;">Dynamic Component</span></div>'
+               }
+            }
+         });
+
+//################  Instance  #########################################
+
+
+var blz_app =new Vue({
+	el: '#bmx',
+	data: {
+		message: 'We attended online service'
+	},
+
+	methods: {
+		revf: function () {
+			this.message = this.message.split('').reverse().join('')
+		}
+	}
+});
+
+//################  Computed Method (Input names) ################################
+
+
+var thier_names = new Vue({
+	el:'#cmpt',
+	data: {
+		hisname:"",
+		hername:"",
+		birthday:""
+	},
+
+	computed: {
+		gettheirnames: function() {
+		return this.hisname + " & " + this.hername;
+		}
+	}
+});
+
+//################ Method & Computed  ##################
+////## Method (gives real random number always) & Computed (gives thesame number all the time ) ##
+
+               var vm = new Vue({
+            el: '#cmpt_mthd',
+            data: {
+               name : "helloworld"
+            },
+            methods: {
+               getrandomno1 : function() {
+                  return Math.random();
+               }
+            },
+            computed :{
+               getrandomno : function(){
+                  return Math.random();
+               }
+            }
+         });
+
+
+ //#### Get /  Set  (get prevents update while SET allows update)### Watch takes care of updating #####
+
+      
+         var vmvb = new Vue({
+            el: '#get_set',
+            data: {
+               cousin : "Terry",
+               nephew : "Ben",
+                kilometers : 0,
+                meters:0
+            },
+            methods: {
+            },
+            computed :{
+               fullnameX : {
+                  get : function() {
+                     return this.cousin+" "+this.nephew;
+                  },
+
+                  set : function(name) {
+                     var fname = name.split(" ");
+                     this.cousin = fname[0];
+                     this.nephew = fname[1]
+                  }
+                }
+            },
+
+            watch : {
+               kilometers:function(val) {
+                  this.kilometers = val;
+                  this.meters = val * 1000;
+               },
+               meters : function (val) {
+                  this.kilometers = val/ 1000;
+                  this.meters = val;
+               }
+            }
+
+         });
+
+
+
+    // Watch takes care of updating the textboxes with the calculation done in the respective functions.
+           var vm = new Vue({
+            el: '#lop',
+            data: {
+               kilometers : 0,
+               meters:0
+            },
+            methods: {
+            },
+            computed :{
+            },
+            watch : {
+               kilometers:function(val) {
+                  this.kilometers = val;
+                  this.meters = val * 1000;
+               },
+               meters : function (val) {
+                  this.kilometers = val/ 1000;
+                  this.meters = val;
+               }
+            }
+         });
+
+
+
+         //### Binding (adding href) #########
+            var vmx = new Vue({
+            el: '#dbg',
+            data: {
+               title : "DATA BINDING",
+               href_google : "https://www.google.com",
+               href_yahoo: "https://uk.yahoo.com/",
+
+               title2: "Class binding",
+               isactive: true,
+
+               title3 : "class binding  for css  using true or false",
+               isActive : true,
+               hasError : false,
+
+               title4 : "class binding for css assiging variables ",
+               infoclass : 'info',
+               errorclass : 'displayError',
+
+               title5: "class binding for css using short if statement",
+
+               title6 : "Inline style Binding",
+               activeColor: 'red',
+               fontSize :'30'
+            },
+
+            components:{
+               'new_component' : {
+                  template : '<div class = "info">Class Binding for component</div>'
+            	}
+        	}
+
+         });
+
+     /// #############  DIV style css #######################
+      
+         var vmdiv = new Vue({
+            el: '#divcss',
+            data: {
+               title : "css DIV styling",
+               styleobj : {
+                  color: 'red',
+                  fontSize :'40px'
+               }
+            }
+         });
+      
+
+
+         //############## TEXTBOX simple form  ##################
+         var vm = new Vue({
+            el: '#databindingx',
+            data: {
+               name:'',
+               textmessage:'',
+               checked : false,
+
+               css1: {
+               	background: '#DFF2BF',
+                fontSize :'20px'
+           }
+            }
+         });
+
+
+   //########### select options ####################
+           var vsssm = new Vue({
+            el: '#slt',
+            data: {
+               picked : 'White',
+               languages : "Java",
+
+                css1: {
+               	background: '#82E8FA',
+                fontSize :'20px'
+           }
+          }
+         });
+
+         
+
+
+   // ###### modifiers accept only numbers ############
+
+         var vmdd = new Vue({
+            el: '#mdf1',
+            data: {
+               age : 0,
+               msg: '',
+               message : ''
+            }
+         });
+
+
+    </script>
+</body>
+
+</html>
